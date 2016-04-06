@@ -1,0 +1,16 @@
+{
+  "name": "font-width",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo index.js --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nikhil Sonnad",
+  "license": "ISC",
+  "devDependencies": {
+    "budo": "^8.1.0",
+    "lorem-ipsum": "^1.0.3"
+  }
+}
