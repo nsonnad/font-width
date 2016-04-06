@@ -1,10 +1,11 @@
 var lorem = require('lorem-ipsum');
-document.body.innerHTML = '<span id="content"></span>';
+document.body.innerHTML = '<span id="test"></span><span id="content"></span>';
 var content = document.getElementById('content');
+var testSpan = document.getElementById('test');
 
 var c = document.createElement('canvas');
 var ctx = c.getContext("2d");
-var letters = 'abcdef ghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,|[]-+1234567890';
+var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,|[]-+1234567890';
 var alphabet = letters.split('');
 var txt;
 var fontFamilies = [];
@@ -34,15 +35,21 @@ for (var i = 0, l = fonts.length; i < l - 1; i++) {
 }
 
 function measureSizes() {
-  return alphabet.reduce(function(prev, c) {
-    prev[c] = ctx.measureText(c).width;
+  var sizes = alphabet.reduce(function(prev, c) {
+    testSpan.innerText = c;
+    prev[c] = testSpan.getBoundingClientRect().width;
     return prev;
   }, {});
+
+  // add space
+  testSpan.innerHTML = "&nbsp;";
+  sizes[" "] = testSpan.getBoundingClientRect().width;
+  return sizes;
 }
 
 function setFont(font, cb) {
   ctx.font = font;
-  document.body.style.font = font;
+  document.body.style = 'font: ' + font;
   cb();
 }
 
@@ -74,7 +81,7 @@ function getRandWords() {
 function measureAll(str, sizes) {
   var computed = getComputedWidth(str, sizes);
   var rect = getRectWidth(str);
-  console.log([computed, rect, getCanvasWidth(str)]);
+  //console.log([computed, rect, getCanvasWidth(str)]);
   console.log('computed/rect', (computed / rect));
 }
 
